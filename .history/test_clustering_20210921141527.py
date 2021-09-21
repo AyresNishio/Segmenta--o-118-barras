@@ -173,7 +173,7 @@ nx.draw_networkx(G,coord,with_labels=True)
 edge_mat = graph_to_edge_matrix(G)
 print(edge_mat)
 
-k_clusters = 3
+k_clusters = 4
 results = []
 algorithms = {}
 
@@ -184,10 +184,10 @@ algorithms['kmeans'] = cluster.KMeans(n_clusters=k_clusters, n_init=118)
 algorithms['agglom'] = cluster.AgglomerativeClustering(n_clusters=k_clusters, linkage="ward")
 
 #Spectral Clustering
-algorithms['spectral'] = cluster.SpectralClustering(n_clusters=k_clusters, affinity="precomputed", n_init=118, assign_labels="discretize")
+algorithms['spectral'] = cluster.SpectralClustering(n_clusters=k_clusters, affinity="precomputed", n_init=118)
 
 #Affinity Propagation
-algorithms['affinity'] = cluster.AffinityPropagation(damping=0.8)
+algorithms['affinity'] = cluster.AffinityPropagation(damping=0.4)
 
 # Fit all models
 for model in algorithms.values():

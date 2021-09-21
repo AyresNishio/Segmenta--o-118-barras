@@ -187,7 +187,7 @@ algorithms['agglom'] = cluster.AgglomerativeClustering(n_clusters=k_clusters, li
 algorithms['spectral'] = cluster.SpectralClustering(n_clusters=k_clusters, affinity="precomputed", n_init=118, assign_labels="discretize")
 
 #Affinity Propagation
-algorithms['affinity'] = cluster.AffinityPropagation(damping=0.8)
+algorithms['affinity'] = cluster.AffinityPropagation(damping=0.5)
 
 # Fit all models
 for model in algorithms.values():
