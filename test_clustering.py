@@ -173,7 +173,7 @@ nx.draw_networkx(G,coord,with_labels=True)
 edge_mat = graph_to_edge_matrix(G)
 print(edge_mat)
 
-k_clusters = 2
+k_clusters = 4
 results = []
 algorithms = {}
 
@@ -199,21 +199,21 @@ print("Models Fitted")
 nx.draw(G,coord,with_labels = True, node_color=list(algorithms['kmeans'].labels_))
 plt.title("kmeans118_test")
 # plt.show()
-plt.savefig("kmeans118_test.png")
+plt.savefig("kmeans118_" + f'teste{k_clusters}_clusters'+ ".png")
 #Agglomerative Clustering
 nx.draw(G,coord,with_labels = True, node_color=list(algorithms['agglom'].labels_))
 plt.title("Agglomerative_118_test")
 # plt.show()
-plt.savefig("Agglomerative_118_test.png")
+plt.savefig("Agglomerative_118_" + f'teste{k_clusters}_clusters'+ ".png")
 #Spectral Clustering
 nx.draw(G,coord,with_labels = True, node_color=list(algorithms['spectral'].labels_))
 plt.title("Spectral_118_test")
 # plt.show()
-plt.savefig("Spectral_118_test.png")
+plt.savefig("Spectral_118_."+ f'teste{k_clusters}_clusters'+ ".png")
 #Affinity
 nx.draw(G,coord,with_labels = True, node_color=list(algorithms['affinity'].labels_))
 plt.title("Affinity_118_test")
 # plt.show()
-plt.savefig("Affinity_118_test.png")
+plt.savefig("Affinity_118_" +f'teste{k_clusters}_clusters'+".png")
 
 print('plot finished')

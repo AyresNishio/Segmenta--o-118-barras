@@ -23,8 +23,8 @@ def graph_to_edge_matrix(G):
     # Loop to set 0 or 1 (diagonal elements are set to 1)
     for node in G:
         for neighbor in G.neighbors(node):
-            edge_mat[node][neighbor] = 1
-        edge_mat[node][node] = 1
+            edge_mat[node-1][neighbor-1] = 1
+        edge_mat[node-1][node-1] = 1
 
     return edge_mat
 
@@ -167,11 +167,53 @@ coord = {
 #Monta G
 G  = Monta_sys(range(1,np.size(Ybus,0)+1),Ybus)
 nx.draw_networkx(G,coord,with_labels=True)
-plt.show()
+# plt.show()
 
 #Convert Grapgh into a matrix
 edge_mat = graph_to_edge_matrix(G)
 print(edge_mat)
 
-#K-Means
+k_clusters = 4
+results = []
+algorithms = {}
 
+#K-Means
+algorithms['kmeans'] = cluster.KMeans(n_clusters=k_clusters, n_init=118)
+
+#Agglomerative Clustering
+algorithms['agglom'] = cluster.AgglomerativeClustering(n_clusters=k_clusters, linkage="ward")
+
+#Spectral Clustering
+algorithms['spectral'] = cluster.SpectralClustering(n_clusters=k_clusters, affinity="precomputed", n_init=118)
+
+#Affinity Propagation
+algorithms['affinity'] = cluster.AffinityPropagation(damping=0.6)
+
+# Fit all models
+for model in algorithms.values():
+    model.fit(edge_mat)
+    results.append(list(model.labels_))
+print("Models Fitted")
+
+#K-Means
+nx.draw(G,coord,with_labels = True, node_color=list(algorithms['kmeans'].labels_))
+plt.title("kmeans118_test")
+# plt.show()
+plt.savefig("kmeans118_" + f'teste{k_clusters}_clusters'+ ".png")
+#Agglomerative Clustering
+nx.draw(G,coord,with_labels = True, node_color=list(algorithms['agglom'].labels_))
+plt.title("Agglomerative_118_test")
+# plt.show()
+plt.savefig("Agglomerative_118_" + f'teste{k_clusters}_clusters'+ ".png")
+#Spectral Clustering
+nx.draw(G,coord,with_labels = True, node_color=list(algorithms['spectral'].labels_))
+plt.title("Spectral_118_test")
+# plt.show()
+plt.savefig("Spectral_118_."+ f'teste{k_clusters}_clusters'+ ".png")
+#Affinity
+nx.draw(G,coord,with_labels = True, node_color=list(algorithms['affinity'].labels_))
+plt.title("Affinity_118_test")
+# plt.show()
+plt.savefig("Affinity_118_" +f'teste{k_clusters}_clusters'+".png")
+
+print('plot finished')

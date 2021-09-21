@@ -9,6 +9,25 @@ import numpy as np
 from sklearn.metrics.cluster import normalized_mutual_info_score
 from sklearn.metrics.cluster import adjusted_rand_score
 
+def graph_to_edge_matrix(G):
+    """Convert a networkx graph into an edge matrix.
+    See https://www.wikiwand.com/en/Incidence_matrix for a good explanation on edge matrices
+   
+    Parameters
+    ----------
+    G : networkx graph
+    """
+    # Initialize edge matrix with zeros
+    edge_mat = np.zeros((len(G), len(G)), dtype=int)
+
+    # Loop to set 0 or 1 (diagonal elements are set to 1)
+    for node in G:
+        for neighbor in G.neighbors(node):
+            edge_mat[node-1][neighbor-1] = 1
+        edge_mat[node-1][node-1] = 1
+
+    return edge_mat
+
 
 def Monta_sys(Ss,Ybus):
 
@@ -145,6 +164,56 @@ coord = {
 117: np.array([200, 0]),
 118: np.array([370, -270])}
 
-
+#Monta G
 G  = Monta_sys(range(1,np.size(Ybus,0)+1),Ybus)
+nx.draw_networkx(G,coord,with_labels=True)
+# plt.show()
 
+#Convert Grapgh into a matrix
+edge_mat = graph_to_edge_matrix(G)
+print(edge_mat)
+
+k_clusters = 3
+results = []
+algorithms = {}
+
+#K-Means
+algorithms['kmeans'] = cluster.KMeans(n_clusters=k_clusters, n_init=118)
+
+#Agglomerative Clustering
+algorithms['agglom'] = cluster.AgglomerativeClustering(n_clusters=k_clusters, linkage="ward")
+
+#Spectral Clustering
+algorithms['spectral'] = cluster.SpectralClustering(n_clusters=k_clusters, affinity="precomputed", n_init=118)
+
+#Affinity Propagation
+algorithms['affinity'] = cluster.AffinityPropagation(damping=0.6)
+
+# Fit all models
+for model in algorithms.values():
+    model.fit(edge_mat)
+    results.append(list(model.labels_))
+print("Models Fitted")
+
+#K-Means
+nx.draw(G,coord,with_labels = True, node_color=list(algorithms['kmeans'].labels_))
+plt.title("kmeans118_test")
+# plt.show()
+plt.savefig("kmeans118_test" + f'teste{k_clusters}_clusters'+ ".png")
+#Agglomerative Clustering
+nx.draw(G,coord,with_labels = True, node_color=list(algorithms['agglom'].labels_))
+plt.title("Agglomerative_118_test")
+# plt.show()
+plt.savefig("Agglomerative_118_test" + f'teste{k_clusters}_clusters'+ ".png")
+#Spectral Clustering
+nx.draw(G,coord,with_labels = True, node_color=list(algorithms['spectral'].labels_))
+plt.title("Spectral_118_test")
+# plt.show()
+plt.savefig("Spectral_118_test."+ f'teste{k_clusters}_clusters'+ ".png")
+#Affinity
+nx.draw(G,coord,with_labels = True, node_color=list(algorithms['affinity'].labels_))
+plt.title("Affinity_118_test")
+# plt.show()
+plt.savefig("Affinity_118_test" +f'teste{k_clusters}_clusters'+".png")
+
+print('plot finished')
