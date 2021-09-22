@@ -23,7 +23,7 @@ from sklearn.metrics.cluster import adjusted_rand_score
 
 # IEEE 14-BUS POWER SYSTEM
 med_plan = np.loadtxt('Med_Plan_14b_33m.txt',dtype = 'i')
-Ybus = np.loadtxt("ieee-14-bus.txt", dtype='i', delimiter='\t')
+Ybus = np.loadtxt("ieee-14-bus.txt", dtype='i', delimiter=',')
 coord = {
 0: np.array([0, 4]), 
 1: np.array([0, 2]), 
@@ -121,6 +121,8 @@ for model in algorithms.values():
 print("Models Fitted")
 
 #K-Means
+grupos = []
+
 nx.draw(G,coord,with_labels = True, node_color=list(algorithms['kmeans'].labels_))
 plt.title("kmeans_test")
 plt.show()

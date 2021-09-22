@@ -10,7 +10,7 @@ def Segmenta_med_plan(med_plan, grupos, E):
     for i in range(len(grupos)):
         sub_med_plan = Sub_med_plan(med_aux, i+1,grupos[i])
 
-        Eg, med_aux = Sub_Covax(sub_med_plan,E,i+1)
+        Eg = Sub_Covax(sub_med_plan,E,i+1)
 
         #A = sub_Topology (grupos[i],A,i,num_barras)
 
@@ -39,15 +39,15 @@ def Sub_Covax ( med, E, n):
     for medi in med:
         col = 0
         for medj in med :
-            de   = medi[0] 
-            para = medj[0]
+            de   = medi[0]-1 
+            para = medj[0]-1
             Eg[lin,col] =  E[de,para]
             col = col + 1
         lin = lin + 1
 
     with open(f'E{n}_{len(med)}m.txt','w') as f:
         np.savetxt(f, Eg) 
-    return Eg, med;
+    return Eg;
 
 #Constroi Matrizes de coneção dos subsistemas (Averiguar se indices estão corretos *comceçam de zero)
 def sub_Topology(G,A,n,nb):
