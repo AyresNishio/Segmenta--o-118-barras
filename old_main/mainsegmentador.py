@@ -15,5 +15,3 @@ E = np.loadtxt('E118b333m.txt', dtype=np.float64)
 Segmenta_med_plan( med_plan,Grupos,E)
 
 print('')
-
-#######################

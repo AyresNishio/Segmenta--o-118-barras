@@ -219,16 +219,16 @@ def Monta_sys(Ss,Ybus):
 
     return G    
 
-def get_weight(med_plan,num_bus): 
-    weight_list = {}
-    for i in range(num_bus):
-        weight_list[i+1] = 0
+# def get_weight(med_plan,num_bus): 
+#     weight_list = {}
+#     for i in range(num_bus):
+#         weight_list[i+1] = 0
 
-    for med in med_plan:
-            weight_list[med[5]] += 1
+#     for med in med_plan:
+#             weight_list[med[5]] += 1
 
-    return weight_list
-#G=nx.Graph()
+#     return weight_list
+# #G=nx.Graph()
 
 def display_w(med_plan,num_barras):
     pos,Ybus = coords(num_barras)
@@ -245,7 +245,7 @@ def display_w(med_plan,num_barras):
         else:
             nx.draw_networkx_labels(G, pos, {key : key}, font_size=7, font_color='k')
 
-    nx.draw_networkx(G, pos,with_labels = False, labels = v_labels , node_color = weight_list,node_shape ='o', width = 0.5, font_size = 0.5, cmap = plt.get_cmap('Oranges'), vmin = min(weight_list), vmax = max(weight_list))
+    nx.draw_networkx(G,pos, node_size = 150 ,with_labels = False, labels = v_labels , node_color = weight_list,node_shape ='o', width = 0.5, font_size = 0.5, cmap = plt.get_cmap('Oranges'), vmin = min(weight_list), vmax = max(weight_list))
     bounds = np.linspace(1,max(weight_list), len(nodes))
     sm = plt.cm.ScalarMappable(cmap=plt.get_cmap('Oranges'),norm=plt.Normalize(vmin = min(weight_list), vmax = max(weight_list)))
     sm._A = []

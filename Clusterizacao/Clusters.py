@@ -21,19 +21,20 @@ from sklearn.metrics.cluster import normalized_mutual_info_score
 from sklearn.metrics.cluster import adjusted_rand_score
 
 
-def Agrupar(G,pos, num_clusters):
+def Agrupar(G,pos, num_clusters,weight):
     n_nodes = G.number_of_nodes
     v_labels =  {x: x for x in G.nodes}
     nodes = list(G.nodes)
-
     #Convert Grapgh into a matrix
-    edge_mat = graph_to_edge_matrix(G)
+    edge_mat = graph_to_edge_matrix_w(G,weight)
     print(edge_mat)
     results = []
     algorithms = {}
-    #algorithms['kmeans'] = cluster.KMeans(n_clusters=num_clusters,n_init= 100,precompute_distances = True, n_jobs = -1, algorithm = "auto")
+    # algorithms['kmeans'] = cluster.KMeans(n_clusters=num_clusters,n_init= 100,precompute_distances = True, n_jobs = -1, algorithm = "auto")
+    # algorithms['kmeans'] = cluster.KMeans(n_init= 100,precompute_distances = True, n_jobs = -1, algorithm = "auto")
+    #algorithms['affinity'] = cluster.AffinityPropagation(damping=0.85,affinity="precomputed")
     # #Spectral Clustering
-    #algorithms['spectral'] = cluster.SpectralClustering(n_clusters=num_clusters, affinity="precomputed", n_init=14, assign_labels="discretize")
+    # algorithms['spectral'] = cluster.SpectralClustering(n_clusters=num_clusters, affinity="precomputed", n_init=14, assign_labels="discretize")
     algorithms['spectral'] = cluster.SpectralClustering( affinity="precomputed", n_init=14, assign_labels="discretize")
     # Fit all models
     for model in algorithms.values():
@@ -43,9 +44,10 @@ def Agrupar(G,pos, num_clusters):
     num_clusters = max(results)+1
     #results = list(itertools.chain.from_iterable(results))
     
-    #nx.draw(G,pos,with_labels = True, node_color=list(algorithms['kmeans'].labels_))
+    # nx.draw(G,pos,with_labels = True, node_color=list(algorithms['kmeans'].labels_))
+    # nx.draw(G,pos,with_labels = True, node_color=list(algorithms['affinity'].labels_))
     nx.draw(G,pos,with_labels = True, node_color=list(algorithms['spectral'].labels_))
-    plt.title("kmeans_test")
+    # plt.title("kmeans_test")
     plt.show()
     grupos = []
     nodes_G = list(G.nodes())
@@ -77,6 +79,20 @@ def graph_to_edge_matrix(G):#(G,weight):
             #edge_mat[node-1][neighbor-1] = weight[node]+weight[neighbor]
         #edge_mat[node-1][node-1] = weight[node]+1
         edge_mat[node-1][node-1] = 1
+
+    return edge_mat
+
+def graph_to_edge_matrix_w(G,weight):
+
+    # Initialize edge matrix with zeros
+    edge_mat = np.zeros((len(G), len(G)), dtype=int)
+
+    # Loop to set 0 or 1 (diagonal elements are set to 1)
+    for node in G:
+        for neighbor in G.neighbors(node):
+            edge_mat[node-1][neighbor-1] = 1
+            #edge_mat[node-1][neighbor-1] = weight[node]+weight[neighbor]
+        edge_mat[node-1][node-1] = weight[node]+1
 
     return edge_mat
 

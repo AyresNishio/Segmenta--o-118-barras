@@ -12,6 +12,9 @@ def Segmenta_med_plan(med_plan, grupos, E):
 
         Eg = Sub_Covax(sub_med_plan,E,i+1)
 
+        np.savetxt(f'E{i+1}_{len(sub_med_plan)}m.txt',Eg,delimiter=' ', fmt='%i')
+        np.savetxt(f'medplan{i+1}_{len(sub_med_plan)}m.txt',sub_med_plan, delimiter=' ', fmt='%i')
+
         #A = sub_Topology (grupos[i],A,i,num_barras)
 
 
@@ -24,8 +27,8 @@ def Sub_med_plan(med, n, G):
             sub_med_plan.append(medida)
 
 
-    with open(f'Med_Plan{n}_{len(sub_med_plan)}m.txt','w') as f:
-         np.savetxt(f, sub_med_plan,fmt='%d',delimiter=' ') 
+    # with open(f'Med_Plan{n}_{len(sub_med_plan)}m.txt','w') as f:
+    #      np.savetxt(f, sub_med_plan,fmt='%d',delimiter=' ') 
     
     return sub_med_plan
 
