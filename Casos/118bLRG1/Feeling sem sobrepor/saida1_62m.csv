@@ -1,0 +1,31 @@
+1 -> 0
+2 -> 19
+3 -> 2
+4 -> 71
+5 -> 31
+ total de tuplas criticas : 124
+Tempo total do programa:0.287000 seg
+numero de combinacoes analisadas por cardinalidade
+1; 62
+2; 1891
+3; 37820
+4; 557845
+5; 6471002
+Tempo Enumeracao
+ 2 ; 0.000 seg 
+ 3 ; 0.000 seg 
+ 4 ; 0.001 seg 
+ 5 ; 0.005 seg 
+Tempo total; 0.006 ; 0.02 
+Tempo primeira fase
+ 2; 0.00 seg
+ 3; 0.00 seg
+ 4; 0.01 seg
+ 5; 0.19 seg
+Tempo total; 0.195 ; 0.68   
+Tempo segunda fase
+ 2; 0.000 seg
+ 3; 0.001 seg
+ 4; 0.002 seg
+ 5; 0.043 seg
+Tempo total; 0.045869; 0.16  
