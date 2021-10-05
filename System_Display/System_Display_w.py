@@ -219,16 +219,18 @@ def Monta_sys(Ss,Ybus):
 
     return G    
 
-# def get_weight(med_plan,num_bus): 
-#     weight_list = {}
-#     for i in range(num_bus):
-#         weight_list[i+1] = 0
+def get_weight(med_plan,num_bus): 
+    weight_list = {}
+    for i in range(num_bus):
+        weight_list[i+1] = 0
 
-#     for med in med_plan:
-#             weight_list[med[5]] += 1
+    for med in med_plan:
+            weight_list[med[1]] += 1
+            if(med[1] == 2): 
+                print("")
 
-#     return weight_list
-# #G=nx.Graph()
+    return weight_list
+#G=nx.Graph()
 
 def display_w(med_plan,num_barras):
     pos,Ybus = coords(num_barras)
