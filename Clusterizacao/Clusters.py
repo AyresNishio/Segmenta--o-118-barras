@@ -30,11 +30,11 @@ def Agrupar(G,pos, num_clusters,weight):
     print(edge_mat)
     results = []
     algorithms = {}
-    # algorithms['kmeans'] = cluster.KMeans(n_clusters=num_clusters,n_init= 100,precompute_distances = True, n_jobs = -1, algorithm = "auto")
-    # algorithms['kmeans'] = cluster.KMeans(n_init= 100,precompute_distances = True, n_jobs = -1, algorithm = "auto")
+    #algorithms['kmeans'] = cluster.KMeans(n_clusters=num_clusters,n_init= 100,precompute_distances = True, n_jobs = -1, algorithm = "auto")
+    #algorithms['kmeans'] = cluster.KMeans(n_init= 100,precompute_distances = True, n_jobs = -1, algorithm = "auto")
     #algorithms['affinity'] = cluster.AffinityPropagation(damping=0.85,affinity="precomputed")
     # #Spectral Clustering
-    # algorithms['spectral'] = cluster.SpectralClustering(n_clusters=num_clusters, affinity="precomputed", n_init=14, assign_labels="discretize")
+    #algorithms['spectral'] = cluster.SpectralClustering(n_clusters=num_clusters, affinity="precomputed", n_init=14, assign_labels="discretize")
     algorithms['spectral'] = cluster.SpectralClustering( affinity="precomputed", n_init=14, assign_labels="discretize")
     # Fit all models
     for model in algorithms.values():
@@ -44,8 +44,8 @@ def Agrupar(G,pos, num_clusters,weight):
     num_clusters = max(results)+1
     #results = list(itertools.chain.from_iterable(results))
     
-    # nx.draw(G,pos,with_labels = True, node_color=list(algorithms['kmeans'].labels_))
-    # nx.draw(G,pos,with_labels = True, node_color=list(algorithms['affinity'].labels_))
+    #nx.draw(G,pos,with_labels = True, node_color=list(algorithms['kmeans'].labels_))
+    #nx.draw(G,pos,with_labels = True, node_color=list(algorithms['affinity'].labels_))
     nx.draw(G,pos,with_labels = True, node_color=list(algorithms['spectral'].labels_))
     # plt.title("kmeans_test")
     plt.show()
@@ -92,7 +92,9 @@ def graph_to_edge_matrix_w(G,weight):
         for neighbor in G.neighbors(node):
             edge_mat[node-1][neighbor-1] = 1
             #edge_mat[node-1][neighbor-1] = weight[node]+weight[neighbor]
-        edge_mat[node-1][node-1] = weight[node]+1
+        edge_mat[node-1][node-1] = 1
+        #edge_mat[node-1][node-1] = weight[node]+1
+        
 
     return edge_mat
 
