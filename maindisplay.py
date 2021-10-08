@@ -30,14 +30,20 @@ Display_sys(G1,coord,'green')
 Display_sys(G2,coord,'red')
 Display_sys(G3,coord,'orange')
 
-med = np.loadtxt('Casos/118bLRG1/med118b333m.txt',dtype=int)
+
 
 plt.close()
+
+med = np.loadtxt('Casos/118bLRG1/med118b333m.txt',dtype=int)
 display_w(med,num_barras)
 
 redun_sis = redundancia(med,Ybus)
-med_G1 = np.loadtxt('Casos/118bLRG1/FsS/med118b333m.txt',dtype=int)
-
+med_G1 = np.loadtxt('Casos/118bLRG1/FsS/medplan1_62m.txt',dtype=int)
+redun_G1 = redundancia_G(med_G1, S1, Ybus) 
+med_G2 = np.loadtxt('Casos/118bLRG1/FsS/medplan2_138m.txt',dtype=int)
+redun_G2 = redundancia_G(med_G2, S2, Ybus) 
+med_G3 = np.loadtxt('Casos/118bLRG1/FsS/medplan3_149m.txt',dtype=int)
+redun_G3 = redundancia_G(med_G3, S3, Ybus) 
 
 plt.show()
 
