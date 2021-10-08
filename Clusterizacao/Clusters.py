@@ -34,8 +34,8 @@ def Agrupar(G,pos, num_clusters,weight):
     #algorithms['kmeans'] = cluster.KMeans(n_init= 100,precompute_distances = True, n_jobs = -1, algorithm = "auto")
     #algorithms['affinity'] = cluster.AffinityPropagation(damping=0.85,affinity="precomputed")
     # #Spectral Clustering
-    #algorithms['spectral'] = cluster.SpectralClustering(n_clusters=num_clusters, affinity="precomputed", n_init=14, assign_labels="discretize")
-    algorithms['spectral'] = cluster.SpectralClustering( affinity="precomputed", n_init=14, assign_labels="discretize")
+    algorithms['spectral'] = cluster.SpectralClustering(n_clusters=num_clusters, affinity="precomputed", n_init=14, assign_labels="discretize")
+    #algorithms['spectral'] = cluster.SpectralClustering( affinity="precomputed", n_init=14, assign_labels="discretize")
     # Fit all models
     for model in algorithms.values():
         model.fit(edge_mat)

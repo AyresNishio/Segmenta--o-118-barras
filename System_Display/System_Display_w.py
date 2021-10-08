@@ -257,6 +257,37 @@ def display_w(med_plan,num_barras):
     # plt.colorbar(sm)
     plt.show() # display
 
+def Display_sys(G,coord,color):
+
+    v_labels = {x: x for x in G.nodes}
+
+    nx.draw_networkx_labels(G, coord, v_labels, font_size=11, font_color='w', font_family = "Tahoma", font_weight = "normal")
+    nx.draw_networkx_nodes(G, coord, node_size = 300, node_color=color, alpha=1, node_shape='o')
+    nx.draw_networkx_edges(G, coord, edge_color = color)
+
+def Display_not_found_Cks(NFC_file_name,color):
+    NFC = []
+
+
+    with open(NFC_file_name, 'r') as f:
+         for line in f:
+             NFC.append([int(num) for num in line.split(' ') if num != '\n'])
+
+
+    Cflux = nx.Graph()
+    Cinjs = nx.Graph()
+    for i in NFC:
+        if size(i) == 2:
+            Cflux.add_edge(i[0],i[1])
+        if size(i) == 1:
+            Cinjs.add_node(i[0])
+
+
+    nx.draw_networkx_nodes(Cinjs, coord, node_shape='s', node_color = color,node_size=500)
+
+    nx.draw_networkx_edges(Cflux, coord, style='dashed', edge_color = color, width=3)       
+ 
+
 if __name__ == "__main__":
 
     # IEEE 14-BUS POWER SYSTEM
@@ -286,4 +317,49 @@ if __name__ == "__main__":
     # plt.gca().set_facecolor('paleturquoise')
     # # plt.colorbar(sm)
     # plt.show() # display
+
+     #Grupo 1
+    with open('Grupo1e.txt', 'r') as f:
+        S1 = np.array([int(b)  for b in f])
+    #print(G1)
+
+    #Grupo 2
+    with open('Grupo2e.txt', 'r') as f:
+        S2 = np.array([int(b)  for b in f])
+    #print(G2)
+
+    #Grupo 3
+    with open('Grupo3e.txt', 'r') as f:
+        S3 = np.array([int(b)  for b in f])
+    #Ybarra e coordenadas
+    coord, Ybus = coords(118) 
+    G  = Monta_sys(range(1,np.size(Ybus,0)+1),Ybus)
+    G1 = Monta_sys(S1,Ybus)
+    G2 = Monta_sys(S2,Ybus)
+    G3 = Monta_sys(S3,Ybus)
+
+    Display_sys(G, coord,'black')
+
+
+    Display_sys(G1,coord,'green')
+    Display_sys(G2,coord,'red')
+    Display_sys(G3,coord,'orange')
+
+    #display de areas comuns
+    # with open('G12.txt', 'r') as f:
+    #     S12 = np.array([int(b)  for b in f])
+
+    # G12 = Monta_sys(S12,Ybus)
+
+    # Display_sys(G12,coord,'blue')
+
+    # Display_not_found_Cks('NFC51.txt','purple')
+
+    Display_not_found_Cks('NFC42.txt','purple')
+
+
+
+    #fig, axes = plt.subplots(5, 5, figsize=(12, 10))
+    plt.show()
+
     print("acabou")
